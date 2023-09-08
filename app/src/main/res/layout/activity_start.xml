@@ -8,8 +8,8 @@
     tools:context=".ui.StartActivity">
     <ImageView
         android:id="@+id/img"
-        android:layout_width="250dp"
-        android:layout_height="250dp"
+        android:layout_width="300dp"
+        android:layout_height="300dp"
         android:layout_centerHorizontal="true"
         android:src="@drawable/img"
         app:layout_constraintEnd_toEndOf="parent"
@@ -22,14 +22,16 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
-        android:textColor="@color/white"
-        android:textSize="20sp"
         android:background="@drawable/item_button_start"
         android:text="@string/start_quiz"
+        android:textColor="@color/white"
+        android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.473"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.568" />
 
     <LinearLayout
         android:layout_width="match_parent"
