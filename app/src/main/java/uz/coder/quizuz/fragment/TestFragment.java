@@ -90,8 +90,8 @@ public class TestFragment extends Fragment  {
         });
         binding.exit.setOnClickListener(view -> {
             AlertDialog dialog = new AlertDialog.Builder(requireContext()).create();
-            dialog.setMessage("Chiqish");
-            dialog.setTitle("Rostdan ham chiqishni xoxlaysizmi ?");
+            dialog.setMessage("Rostdan ham chiqishni xoxlaysizmi ?");
+            dialog.setTitle("Chiqish");
             dialog.setButton(AlertDialog.BUTTON_POSITIVE, "Ha", (dialogInterface, i) -> Navigation.findNavController(binding.getRoot()).navigate(R.id.startFragment));
             dialog.setButton(AlertDialog.BUTTON_NEGATIVE, "Yo'q", (dialogInterface, i) -> dialog.dismiss());
             dialog.show();
