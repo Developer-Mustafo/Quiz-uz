@@ -1,6 +1,7 @@
 package uz.coder.quizuz.fragment;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
@@ -87,7 +88,14 @@ public class TestFragment extends Fragment  {
             }
             binding.round.setText(index + "/" + quessionModelList.size());
         });
-        binding.exit.setOnClickListener(view -> Navigation.findNavController(binding.getRoot()).navigate(R.id.startFragment));
+        binding.exit.setOnClickListener(view -> {
+            AlertDialog dialog = new AlertDialog.Builder(requireContext()).create();
+            dialog.setMessage("Chiqish");
+            dialog.setTitle("Rostdan ham chiqishni xoxlaysizmi ?");
+            dialog.setButton(AlertDialog.BUTTON_POSITIVE, "Ha", (dialogInterface, i) -> Navigation.findNavController(binding.getRoot()).navigate(R.id.startFragment));
+            dialog.setButton(AlertDialog.BUTTON_NEGATIVE, "Yo'q", (dialogInterface, i) -> dialog.dismiss());
+            dialog.show();
+        });
         if (laulage != null){
             binding.laulage.setText(laulage);
         }

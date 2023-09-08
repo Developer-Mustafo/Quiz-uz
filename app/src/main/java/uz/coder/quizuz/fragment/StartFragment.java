@@ -17,6 +17,7 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.List;
 
+import uz.coder.quizuz.adapter.LaulageAdapter;
 import uz.coder.quizuz.model.LaulageModel;
 import uz.coder.quizuz.R;
 import uz.coder.quizuz.databinding.FragmentStartBinding;

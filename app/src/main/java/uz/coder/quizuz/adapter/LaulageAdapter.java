@@ -1,4 +1,4 @@
-package uz.coder.quizuz.fragment;
+package uz.coder.quizuz.adapter;
 
 import android.view.LayoutInflater;
 import android.view.ViewGroup;

@@ -18,6 +18,7 @@ public class StartActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
         binding.start.setOnClickListener(view -> {
             Intent intent = new Intent(StartActivity.this,MainActivity.class);
+            startActivity(intent);
         });
         binding.about.setOnClickListener(view1->{
             Intent intent = new Intent(StartActivity.this,XaqidaActivity.class);
