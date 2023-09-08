@@ -1,4 +1,4 @@
-package uz.coder.quizuz;
+package uz.coder.quizuz.model;
 
 public class LaulageModel {
     private int image;

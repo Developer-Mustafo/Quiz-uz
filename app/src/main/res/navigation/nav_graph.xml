@@ -3,29 +3,29 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/blankFragment">
+    app:startDestination="@id/startFragment">
 
     <fragment
-        android:id="@+id/blankFragment"
-        android:name="uz.coder.quizuz.BlankFragment"
+        android:id="@+id/startFragment"
+        android:name="uz.coder.quizuz.fragment.StartFragment"
         android:label="fragment_blank"
-        tools:layout="@layout/fragment_blank" />
+        tools:layout="@layout/fragment_start" />
     <fragment
-        android:id="@+id/blankFragment2"
-        android:name="uz.coder.quizuz.BlankFragment2"
+        android:id="@+id/testFragment"
+        android:name="uz.coder.quizuz.fragment.TestFragment"
         android:label="fragment_blank2"
-        tools:layout="@layout/fragment_blank2" >
+        tools:layout="@layout/fragment_test" >
         <action
             android:id="@+id/action_blankFragment2_to_blankFragment"
-            app:destination="@id/blankFragment" />
+            app:destination="@id/startFragment" />
     </fragment>
     <fragment
-        android:id="@+id/blankFragment3"
-        android:name="uz.coder.quizuz.BlankFragment3"
+        android:id="@+id/natijaFragment"
+        android:name="uz.coder.quizuz.fragment.NatijaFragment"
         android:label="fragment_blank3"
-        tools:layout="@layout/fragment_blank3" >
+        tools:layout="@layout/fragment_natija" >
         <action
             android:id="@+id/action_blankFragment3_to_blankFragment"
-            app:destination="@id/blankFragment" />
+            app:destination="@id/startFragment" />
     </fragment>
 </navigation>

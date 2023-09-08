@@ -1,4 +1,4 @@
-package uz.coder.quizuz;
+package uz.coder.quizuz.fragment;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -12,15 +12,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import uz.coder.quizuz.databinding.FragmentBlank3Binding;
-import uz.coder.quizuz.databinding.FragmentBlankBinding;
+import uz.coder.quizuz.R;
+import uz.coder.quizuz.databinding.FragmentNatijaBinding;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link BlankFragment3#newInstance} factory method to
+ * Use the {@link NatijaFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class BlankFragment3 extends Fragment {
+public class NatijaFragment extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -32,7 +32,7 @@ public class BlankFragment3 extends Fragment {
     private int mParam2;
     private int mParam3;
 
-    public BlankFragment3() {
+    public NatijaFragment() {
         // Required empty public constructor
     }
 
@@ -45,8 +45,8 @@ public class BlankFragment3 extends Fragment {
      * @return A new instance of fragment BlankFragment3.
      */
     // TODO: Rename and change types and number of parameters
-    public static BlankFragment3 newInstance(String param1, String param2) {
-        BlankFragment3 fragment = new BlankFragment3();
+    public static NatijaFragment newInstance(String param1, String param2) {
+        NatijaFragment fragment = new NatijaFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -63,7 +63,7 @@ public class BlankFragment3 extends Fragment {
             mParam3 = getArguments().getInt("hamma");
         }
     }
-    FragmentBlank3Binding binding;
+    FragmentNatijaBinding binding;
     SharedPreferences sharedPreferences;
     SharedPreferences.Editor editor;
     @SuppressLint("SetTextI18n")
@@ -71,16 +71,16 @@ public class BlankFragment3 extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        binding = FragmentBlank3Binding.inflate(inflater,container,false);
+        binding = FragmentNatijaBinding.inflate(inflater,container,false);
         sharedPreferences = requireContext().getSharedPreferences("S", Context.MODE_PRIVATE);
         editor = sharedPreferences.edit();
-        binding.home.setOnClickListener(view -> Navigation.findNavController(binding.getRoot()).navigate(R.id.blankFragment));
+        binding.home.setOnClickListener(view -> Navigation.findNavController(binding.getRoot()).navigate(R.id.startFragment));
         binding.refresh.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 editor.putString("a",mParam1);
                 editor.commit();
-                Navigation.findNavController(binding.getRoot()).navigate(R.id.blankFragment2);
+                Navigation.findNavController(binding.getRoot()).navigate(R.id.testFragment);
             }
         });
         if (mParam3 != 0){

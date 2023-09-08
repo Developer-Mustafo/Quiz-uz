@@ -1,4 +1,4 @@
-package uz.coder.quizuz;
+package uz.coder.quizuz.fragment;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -10,32 +10,34 @@ import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
 import android.os.CountDownTimer;
-import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 
-import uz.coder.quizuz.databinding.FragmentBlank2Binding;
-public class BlankFragment2 extends Fragment  {
+import uz.coder.quizuz.model.QuessionModel;
+import uz.coder.quizuz.R;
+import uz.coder.quizuz.databinding.FragmentTestBinding;
+import uz.coder.quizuz.databinding.ItemDialogBinding;
+
+public class TestFragment extends Fragment  {
 
     // TODO: Rename and change types of parameters
     private String laulage,a;
-    private String myAnswer = null;
+    private String myAnswer=null;
     SharedPreferences sharedPreferences;
     SharedPreferences.Editor editor;
     private int hisob;
     private int index = 0;
+    private boolean javob = false;
     private List<QuessionModel> quessionModelList;
-    private Animation animation;
 
-    public BlankFragment2() {
+    public TestFragment() {
         // Required empty public constructor
     }
 
@@ -49,12 +51,12 @@ public class BlankFragment2 extends Fragment  {
             a = getArguments().getString("laulage");
         }
     }
-    FragmentBlank2Binding binding;
+    FragmentTestBinding binding;
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        binding = FragmentBlank2Binding.inflate(inflater,container,false);
+        binding = FragmentTestBinding.inflate(inflater,container,false);
         sharedPreferences = requireContext().getSharedPreferences("S", Context.MODE_PRIVATE);
         editor = sharedPreferences.edit();
         laulage = sharedPreferences.getString("a",a);
@@ -62,19 +64,20 @@ public class BlankFragment2 extends Fragment  {
         loadUi();
         binding.back.setOnClickListener(view -> {
             if (index != 0){
-                index = index -1;
+                index--;
                 loadUi();
-                hisob=hisob-1;
+                hisob--;
                 myAnswer = null;
                 binding.forward.setVisibility(View.VISIBLE);
             }else {
                 Toast.makeText(requireContext(), "Xozir siz 1 -inchi savoldasiz", Toast.LENGTH_SHORT).show();
                 binding.back.setVisibility(View.INVISIBLE);
             }
+            binding.round.setText(index + "/" + quessionModelList.size());
         });
         binding.forward.setOnClickListener(view -> {
             if (index != quessionModelList.size()-1){
-                index = index +1;
+                index++;
                 loadUi();
                     binding.back.setVisibility(View.VISIBLE);
                 myAnswer = null;
@@ -82,65 +85,123 @@ public class BlankFragment2 extends Fragment  {
                 Toast.makeText(requireContext(), "Xozir siz oxirgi savoldasiz", Toast.LENGTH_SHORT).show();
                 binding.forward.setVisibility(View.INVISIBLE);
             }
+            binding.round.setText(index + "/" + quessionModelList.size());
         });
-        binding.exit.setOnClickListener(view -> Navigation.findNavController(binding.getRoot()).navigate(R.id.blankFragment));
+        binding.exit.setOnClickListener(view -> Navigation.findNavController(binding.getRoot()).navigate(R.id.startFragment));
         if (laulage != null){
             binding.laulage.setText(laulage);
         }
-        binding.var1.setOnClickListener(view -> myAnswer = quessionModelList.get(index).getVar1());
-        binding.var2.setOnClickListener(view -> myAnswer = quessionModelList.get(index).getVar2());
-        binding.var3.setOnClickListener(view -> myAnswer = quessionModelList.get(index).getVar3());
-        binding.var4.setOnClickListener(view -> myAnswer = quessionModelList.get(index).getVar4());
+        binding.var1.setOnClickListener(view -> {
+            myAnswer = binding.var1.getText().toString();
+        });
+        binding.var2.setOnClickListener(view -> {
+            myAnswer = binding.var2.getText().toString();
+        });
+        binding.var3.setOnClickListener(view ->{
+            myAnswer = binding.var3.getText().toString();
+        });
+        binding.var4.setOnClickListener(view -> {
+            myAnswer = binding.var4.getText().toString();
+        });
         binding.tekshir.setOnClickListener(view -> {
+            if (myAnswer != null) {
+                if (Objects.equals(myAnswer, quessionModelList.get(index).getTrueAnswer())) {
+                    Toast.makeText(requireContext(), "Barakalla", Toast.LENGTH_SHORT).show();
+                    javob = true;
+                    hisob++;
+                } else {
+                    Toast.makeText(requireContext(), "Xato", Toast.LENGTH_SHORT).show();
+                    javob = false;
+                }
+                index++;
+            } else {
+                Toast.makeText(requireContext(), "Javobni tanlang", Toast.LENGTH_SHORT).show();
+                binding.var1.setBackgroundResource(R.drawable.item_button);
+                binding.var2.setBackgroundResource(R.drawable.item_button);
+                binding.var3.setBackgroundResource(R.drawable.item_button);
+                binding.var4.setBackgroundResource(R.drawable.item_button);
+            }
             if (index !=-1){
                 binding.back.setVisibility(View.VISIBLE);
             }else {
                 binding.back.setVisibility(View.INVISIBLE);
             }
-            if (myAnswer != null){
-                if (myAnswer.equals(quessionModelList.get(index).getTrueAnswer())){
-                    Toast.makeText(requireContext(), "Barakalla", Toast.LENGTH_SHORT).show();
-                    hisob++;
-                    index++;
-                }else {
-                    Toast.makeText(requireContext(), "Xato", Toast.LENGTH_SHORT).show();
-                    index++;
+            new CountDownTimer(2000,1000){
+                @Override
+                public void onTick(long l) {
+                    if (javob){
+                        for (int i = 0; i < quessionModelList.size(); i++) {
+                            if (Objects.equals(quessionModelList.get(i).getTrueAnswer(), binding.var1.getText().toString())) {
+                                binding.var1.setBackgroundResource(R.drawable.item_true_answer);
+                            }else if (Objects.equals(quessionModelList.get(i).getTrueAnswer(), binding.var2.getText().toString())) {
+                                binding.var2.setBackgroundResource(R.drawable.item_true_answer);
+                            }else if (Objects.equals(quessionModelList.get(i).getTrueAnswer(), binding.var3.getText().toString())) {
+                                binding.var3.setBackgroundResource(R.drawable.item_true_answer);
+                            }else if (Objects.equals(quessionModelList.get(i).getTrueAnswer(), binding.var4.getText().toString())) {
+                                binding.var4.setBackgroundResource(R.drawable.item_true_answer);
+                            }
+                        }
+                    }else{
+                        for (int i = 0; i < quessionModelList.size(); i++) {
+                            if (Objects.equals(myAnswer, binding.var1.getText().toString())){
+                                binding.var1.setBackgroundResource(R.drawable.item_false_answer);
+                            } if (Objects.equals(myAnswer, binding.var2.getText().toString())){
+                                binding.var2.setBackgroundResource(R.drawable.item_false_answer);
+                            } if (Objects.equals(myAnswer, binding.var3.getText().toString())){
+                                binding.var3.setBackgroundResource(R.drawable.item_false_answer);
+                            } if (Objects.equals(myAnswer, binding.var4.getText().toString())){
+                                binding.var4.setBackgroundResource(R.drawable.item_false_answer);
+                            }
+
+                            if (Objects.equals(quessionModelList.get(i).getTrueAnswer(), binding.var1.getText().toString())) {
+                                binding.var1.setBackgroundResource(R.drawable.item_true_answer);
+                            } if (Objects.equals(quessionModelList.get(i).getTrueAnswer(), binding.var2.getText().toString())) {
+                                binding.var2.setBackgroundResource(R.drawable.item_true_answer);
+                            } if (Objects.equals(quessionModelList.get(i).getTrueAnswer(), binding.var3.getText().toString())) {
+                                binding.var3.setBackgroundResource(R.drawable.item_true_answer);
+                            } if (Objects.equals(quessionModelList.get(i).getTrueAnswer(), binding.var4.getText().toString())) {
+                                binding.var4.setBackgroundResource(R.drawable.item_true_answer);
+                            }
+                        }
+                    }
+
+                    binding.round.setText(index + "/" + quessionModelList.size());
                 }
 
-            }else {
-                Toast.makeText(requireContext(), "Javobni tanlang", Toast.LENGTH_SHORT).show();
-            }
-            if (index < quessionModelList.size()){
-                loadUi();
-            }else {
-                Toast.makeText(requireContext(), "Savollar Tugadi", Toast.LENGTH_SHORT).show();
-                Bundle bundle = new Bundle();
-                bundle.putString("l",laulage);
-                bundle.putInt("h",hisob);
-                bundle.putInt("hamma", quessionModelList.size());
-
-                new CountDownTimer(3000, 1000) {
-                    @Override
-                    public void onTick(long l) {
-                        binding.card.setVisibility(View.VISIBLE);
-                        binding.l.setVisibility(View.INVISIBLE);
-                        binding.savol.setVisibility(View.INVISIBLE);
-                        binding.var.setVisibility(View.INVISIBLE);
-                        binding.tekshir.setVisibility(View.INVISIBLE);
-                        binding.boshqar.setVisibility(View.INVISIBLE);
+                @Override
+                public void onFinish() {
+                    binding.var1.setBackgroundResource(R.drawable.item_button);
+                    binding.var2.setBackgroundResource(R.drawable.item_button);
+                    binding.var3.setBackgroundResource(R.drawable.item_button);
+                    binding.var4.setBackgroundResource(R.drawable.item_button);
+                    if (index <= quessionModelList.size()-1){
+                        loadUi();
                     }
+                    else {
+                        Toast.makeText(requireContext(), "Savollar Tugadi", Toast.LENGTH_SHORT).show();
+                        Bundle bundle = new Bundle();
+                        bundle.putString("l",laulage);
+                        bundle.putInt("h",hisob);
+                        bundle.putInt("hamma", quessionModelList.size());
+                        ItemDialogBinding dialogBinding = ItemDialogBinding.inflate(inflater,container,false);
+                        AlertDialog dialog = new AlertDialog.Builder(requireContext()).create();
+                        dialog.setView(dialogBinding.getRoot());
+                        dialog.setCancelable(false);
+                        new CountDownTimer(3000, 1000) {
+                            @Override public void onTick(long l) { dialog.show();}
+                            @Override public void onFinish() {
+                                index = 0;
+                                dialog.dismiss();
+                                Navigation.findNavController(binding.getRoot()).navigate(R.id.natijaFragment,bundle);
+                            }
 
-                    @Override
-                    public void onFinish() {
-                        binding.card.setVisibility(View.INVISIBLE);
-                        Navigation.findNavController(binding.getRoot()).navigate(R.id.blankFragment3,bundle);
+                        }.start();
                     }
-                }.start();
-            }
-            binding.round.setText(String.valueOf(index+"/"+ quessionModelList.size()));
-            myAnswer = null;
+                    binding.round.setText(index + "/" + quessionModelList.size());
+                }
+            }.start();
         });
-        binding.round.setText(String.valueOf(index+"/"+ quessionModelList.size()));
+        binding.round.setText(index + "/" + quessionModelList.size());
         return binding.getRoot();
     }
 
@@ -189,7 +250,7 @@ public class BlankFragment2 extends Fragment  {
                 case "Android":
                     List<QuessionModel> androidList = new ArrayList<>();
                     androidList.add(new QuessionModel("Intent bilan nima qilamiz ?", "Activityga ma'lumot ham olib o'tamiz", "Bu bir siykl", "Boshqa activityga o'tamiz", "Saqlaymiz", "Activityga ma'lumot ham olib o'tamiz"));
-                    androidList.add(new QuessionModel("SharedPreferences bilan nima qilamiz ?", "Activityga ma'lumot ham olib o'tamiz", "Ma'lumotlarni saqlaymiz", "Boshqa activityga o'tamiz", "Animatsiya qilamiz", "Ma'lumotlarni saqlaymiz"));
+                    androidList.add(new QuessionModel("Shared Preferences bilan nima qilamiz ?", "Activityga ma'lumot ham olib o'tamiz", "Ma'lumotlarni saqlaymiz", "Boshqa activityga o'tamiz", "Animatsiya qilamiz", "Ma'lumotlarni saqlaymiz"));
                     androidList.add(new QuessionModel("Edit text nima qiladi ?", "Edittextda biz yozgan ma'lumotni o'qishimiz mumkun", "O'zgaruvchilarni tekshiramiz", "Boshqa activityga o'tamiz", "Saqlaymiz", "Edittextda biz yozgan ma'lumotni o'qishimiz mumkun"));
                     androidList.add(new QuessionModel("Qaysi bir listsaqlaydigan view yaxshiroq ?", "ListView", "A va D", "No'malum", "RecycleView", "RecycleView"));
                     androidList.add(new QuessionModel("Listga qo'shganda Adapterni qaysi funksiyasidan foydalanish kerak ?", "adapter.notifyDataSetChanged();", "A va C", "adapter.notifyItemInserted();", "adapter.notifyItemRangeChanged();", "adapter.notifyItemInserted();"));
@@ -197,7 +258,7 @@ public class BlankFragment2 extends Fragment  {
                     androidList.add(new QuessionModel("ListViewda faqat Stringni saqlamoqchi bo'lsak qaysi adapterdan foydalanamiz ?", "Gson", "ArrayAdapter", "Glide", "Adapter", "ArrayAdapter"));
                     androidList.add(new QuessionModel("Listda ma'lumotni o'chirgandan so'ng qaysi metodlardan foydalanamiz ?", "notifyDataSetChanged();", "notifyItemRangeChanged()", "notifyItemRemoved() - notifyItemRangeChanged()", "notifyItemRemoved()", "notifyItemRemoved() - notifyItemRangeChanged()"));
                     androidList.add(new QuessionModel("Biz Androidda DataBase ma'lumotlarni saqlaganda qaysi turidan foydalanamiz", "SQLite", "MySQL", "A va B", "Men bilmayman", "SQLite"));
-                    androidList.add(new QuessionModel("TextInputEditTextni chap tomonga qanday to'g'ri rasm qo'chiladi ?", "app:rightDrawable=\"\";", "app:leftDrawable=\"\"", "app:endIconDrawable=\"\"", "app:startIconDrawable=\"\"", "app:startIconDrawable=\"\""));
+                    androidList.add(new QuessionModel("TextInputEditTextni chap tomonga qanday to'g'ri rasm qo'yiladi ?", "app:rightDrawable=\"\";", "app:leftDrawable=\"\"", "app:endIconDrawable=\"\"", "app:startIconDrawable=\"\"", "app:startIconDrawable=\"\""));
                     Collections.shuffle(androidList);
                     quessionModelList = androidList;
                     break;

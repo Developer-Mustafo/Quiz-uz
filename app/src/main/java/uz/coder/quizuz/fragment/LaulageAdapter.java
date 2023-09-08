@@ -1,7 +1,6 @@
-package uz.coder.quizuz;
+package uz.coder.quizuz.fragment;
 
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
@@ -10,10 +9,11 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.List;
 
 import uz.coder.quizuz.databinding.ItemLaulageBinding;
+import uz.coder.quizuz.model.LaulageModel;
 
 public class LaulageAdapter extends RecyclerView.Adapter<LaulageAdapter.VH> {
-    List<LaulageModel> laulageModelList;
-    OnClickListener onClickListener;
+    private final List<LaulageModel> laulageModelList;
+    private final OnClickListener onClickListener;
 
     public LaulageAdapter(List<LaulageModel> laulageModelList, OnClickListener onClickListener) {
         this.laulageModelList = laulageModelList;
@@ -23,7 +23,7 @@ public class LaulageAdapter extends RecyclerView.Adapter<LaulageAdapter.VH> {
     @NonNull
     @Override
     public VH onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return new VH(ItemLaulageBinding.inflate(LayoutInflater.from(parent.getContext()),parent,false));
+        return new VH(ItemLaulageBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false));
     }
 
     @Override
@@ -38,7 +38,7 @@ public class LaulageAdapter extends RecyclerView.Adapter<LaulageAdapter.VH> {
         return laulageModelList.size();
     }
 
-    class VH extends RecyclerView.ViewHolder {
+    static class VH extends RecyclerView.ViewHolder {
         ItemLaulageBinding binding;
         public VH( @NonNull ItemLaulageBinding binding) {
             super(binding.getRoot());
@@ -46,6 +46,6 @@ public class LaulageAdapter extends RecyclerView.Adapter<LaulageAdapter.VH> {
         }
     }
     public interface OnClickListener{
-        public void OnClick(int position);
+        void OnClick(int position);
     }
 }

@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/img_1"
+    tools:context=".ui.StartActivity">
+    <ImageView
+        android:id="@+id/img"
+        android:layout_width="250dp"
+        android:layout_height="250dp"
+        android:layout_centerHorizontal="true"
+        android:src="@drawable/img"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.496"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/start"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:textColor="@color/white"
+        android:textSize="20sp"
+        android:background="@drawable/item_button_start"
+        android:text="@string/start_quiz"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/start"
+        app:layout_constraintVertical_bias="1.0">
+
+        <androidx.appcompat.widget.AppCompatImageButton
+            android:id="@+id/about"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_margin="30dp"
+            android:background="@drawable/item_button"
+            android:src="@drawable/icons8_about" />
+
+        <androidx.appcompat.widget.AppCompatImageButton
+            android:id="@+id/other"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_margin="30dp"
+            android:background="@drawable/item_button"
+            android:src="@drawable/basic_menu_other_2_svgrepo_com" />
+
+        <androidx.appcompat.widget.AppCompatImageButton
+            android:id="@+id/we"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_margin="30dp"
+            android:background="@drawable/item_button"
+            android:src="@drawable/users_group_two_rounded_svgrepo_com" />
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@drawable/img_1"
-    tools:context=".BlankFragment3">
+    tools:context=".fragment.NatijaFragment">
 
     <!-- TODO: Update blank fragment layout -->
     <LinearLayout
